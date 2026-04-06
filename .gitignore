@@ -1,0 +1,52 @@
+# System and User Directories
+AppData/
+Local Settings/
+Application Data/
+Cookies/
+My Documents/
+NetHood/
+PrintHood/
+Recent/
+SendTo/
+Start Menu/
+Templates/
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
+
+# Windows System Files
+*.LOG1
+*.LOG2
+*.blf
+*.regtrans-ms
+*.TM.blf
+
+# User Folders
+Contacts/
+Favorites/
+Links/
+Saved Games/
+Searches/
+Videos/
+Pictures/
+Music/
+Desktop/
+Documents/
+Downloads/
+OneDrive/
+
+# Development
+node_modules/
+.cache/
+.vscode/
+.config/
+.gradle/
+.m2/
+.npm/
+
+# Temporary
+*.tmp
+*.temp
+*.log
+.DS_Store
+Thumbs.db
