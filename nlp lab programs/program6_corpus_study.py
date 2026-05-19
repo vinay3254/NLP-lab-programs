@@ -18,6 +18,9 @@
 # ============================================
 # 1. INSTALL & DOWNLOAD NLTK DATA
 # ============================================
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
 import nltk
 import os
 
