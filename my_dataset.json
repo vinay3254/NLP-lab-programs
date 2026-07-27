@@ -1,0 +1,102 @@
+[
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is the difference between a list and a tuple in Python?",
+    "output": "Lists and tuples are both ordered sequence types in Python, but they differ in mutability. Lists are mutable — you can add, remove, or change elements after creation using methods like append(), remove(), and direct assignment. Tuples are immutable — once created, their contents cannot be changed. Use a list when you need a collection that will change over time (e.g., a shopping cart), and a tuple when the data should be fixed (e.g., coordinates, RGB values, or dictionary keys). Tuples are also slightly faster than lists for iteration and use less memory because Python can optimize them internally."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I reverse a string in Python?",
+    "output": "The most Pythonic way to reverse a string is using slice notation: reversed_str = my_string[::-1]. The [::-1] slice means 'start from the end, step backwards by 1'. Alternatively, you can use ''.join(reversed(my_string)), which uses Python's built-in reversed() iterator. For large strings, both approaches are O(n) in time and space since Python strings are immutable and a new string must be created. Avoid reversing character-by-character in a loop — it's correct but slower and less readable."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "Explain what a Python decorator is with a simple example.",
+    "output": "A decorator is a function that wraps another function to extend its behavior without modifying its source code. It uses the @syntax as syntactic sugar. For example: `def log(func):\\n    def wrapper(*args, **kwargs):\\n        print(f'Calling {func.__name__}')\\n        return func(*args, **kwargs)\\n    return wrapper\\n\\n@log\\ndef greet(name):\\n    return f'Hello, {name}'`. When you call greet('Alice'), Python automatically calls log(greet)('Alice'), printing 'Calling greet' before returning 'Hello, Alice'. Decorators are used for logging, timing, authentication, caching (functools.lru_cache), and more."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is the time complexity of binary search and why?",
+    "output": "Binary search has O(log n) time complexity. In each step, it eliminates half of the remaining candidates by comparing the target with the middle element. Starting with n elements: after 1 comparison → n/2 remain, after 2 → n/4, after k → n/2^k. We stop when n/2^k = 1, so k = log2(n). For 1 million elements, binary search takes at most 20 comparisons vs 1 million for linear search. The key requirement is that the array must be sorted — binary search does not work on unsorted data."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is a Python generator and when should I use one?",
+    "output": "A generator is a function that uses 'yield' instead of 'return' to produce values one at a time, on demand. Unlike a list that stores all values in memory, a generator computes each value only when requested. Example: `def count_up(n):\\n    for i in range(n):\\n        yield i`. You call next() on it or iterate with a for loop. Use generators when: (1) the dataset is too large to fit in memory, (2) you only need to process items sequentially once, (3) you are implementing lazy evaluation pipelines. Python's range() is itself a lazy sequence — it does not create a list of numbers."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How does Python's garbage collector work?",
+    "output": "Python uses two mechanisms for memory management. First, reference counting: every object has a count of how many variables point to it. When that count drops to zero, Python immediately frees the memory. Second, a cyclic garbage collector handles reference cycles (e.g., object A points to B, B points back to A — neither ever reaches zero references). Python's gc module periodically scans for these cycles using a generational algorithm, where objects that survive more collections are promoted to older generations and scanned less frequently. You can manually trigger collection with gc.collect(), but it is rarely necessary."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is the difference between == and 'is' in Python?",
+    "output": "== checks value equality — whether two objects have the same content. 'is' checks identity — whether two variables point to the exact same object in memory. Example: `a = [1, 2, 3]; b = [1, 2, 3]; a == b` is True (same values), but `a is b` is False (different objects). A common trap: `x = 256; y = 256; x is y` is True because Python caches small integers (-5 to 256). But `x = 1000; y = 1000; x is y` may be False. Always use == for value comparison. Only use 'is' to check for None (e.g., `if x is None`)."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I handle exceptions properly in Python?",
+    "output": "Use try/except/else/finally blocks. The 'try' block contains code that might fail. 'except' catches specific exceptions — always catch the most specific exception type, not bare 'except:'. 'else' runs only if no exception occurred. 'finally' always runs (for cleanup like closing files). Example: `try:\\n    result = 10 / x\\nexcept ZeroDivisionError:\\n    print('Cannot divide by zero')\\nexcept TypeError as e:\\n    print(f'Type error: {e}')\\nelse:\\n    print(f'Result: {result}')\\nfinally:\\n    print('Done')`. Avoid catching Exception or BaseException unless you re-raise or log the error — it hides bugs."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "Implement a function to find all duplicates in a list efficiently.",
+    "output": "The most efficient approach uses a set for O(n) time and O(n) space: `def find_duplicates(lst):\\n    seen = set()\\n    duplicates = set()\\n    for item in lst:\\n        if item in seen:\\n            duplicates.add(item)\\n        else:\\n            seen.add(item)\\n    return list(duplicates)`. Alternatively, use collections.Counter: `from collections import Counter; [k for k, v in Counter(lst).items() if v > 1]`. Both are O(n). Avoid the naive O(n^2) approach of comparing every pair. If you need duplicates in order of first occurrence, use a dict to preserve insertion order (Python 3.7+)."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is the difference between *args and **kwargs in Python?",
+    "output": "*args collects positional arguments into a tuple, allowing a function to accept any number of positional inputs. **kwargs collects keyword arguments into a dictionary. Example: `def func(*args, **kwargs):\\n    print(args)   # tuple of positional args\\n    print(kwargs) # dict of keyword args`. Calling `func(1, 2, x=3, y=4)` prints `(1, 2)` and `{'x': 3, 'y': 4}`. You can also use * and ** to unpack: `func(*[1,2], **{'x':3})`. The names 'args' and 'kwargs' are conventions — what matters are the * and ** operators. Order in signature must be: normal args, *args, keyword-only args, **kwargs."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I read and write files in Python safely?",
+    "output": "Always use the 'with' statement (context manager) to ensure files are closed even if an exception occurs. For reading: `with open('file.txt', 'r', encoding='utf-8') as f:\\n    content = f.read()`. For writing: `with open('file.txt', 'w', encoding='utf-8') as f:\\n    f.write('Hello')`. For appending: use mode 'a'. For large files, iterate line by line instead of read(): `for line in f:`. Always specify encoding='utf-8' explicitly — the default depends on the OS and can cause cross-platform bugs. For binary files (images, etc.), use mode 'rb' or 'wb'."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "Explain Python's Global Interpreter Lock (GIL) and its impact on threading.",
+    "output": "The GIL (Global Interpreter Lock) is a mutex that allows only one thread to execute Python bytecode at a time, even on multi-core CPUs. This means CPU-bound tasks (heavy computation) do NOT benefit from Python threads — only one core is used. However, I/O-bound tasks DO benefit: while one thread waits for network or disk I/O, the GIL is released and another thread can run. For CPU-bound parallelism, use multiprocessing (separate processes, each with its own GIL) or libraries like NumPy/PyTorch which release the GIL for their C extensions. Python 3.13 introduced experimental no-GIL mode, but it is not the default yet."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is a dictionary comprehension and give an example?",
+    "output": "A dictionary comprehension creates a dict in a single expression: `{key_expr: value_expr for item in iterable if condition}`. Example: `squares = {x: x**2 for x in range(1, 6)}` produces `{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}`. You can also invert a dict: `inverted = {v: k for k, v in original.items()}`. Or filter: `adults = {name: age for name, age in people.items() if age >= 18}`. Dictionary comprehensions are more readable and typically faster than building dicts with a for-loop and dict[key]=value. Avoid them when the logic is complex — readability matters more than cleverness."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I implement a stack and queue in Python?",
+    "output": "For a stack (LIFO), use a Python list: `stack = []; stack.append(item)` to push, `stack.pop()` to pop. Both are O(1). For a queue (FIFO), do NOT use a list — list.pop(0) is O(n) because it shifts all elements. Instead use collections.deque: `from collections import deque; q = deque(); q.append(item)` to enqueue, `q.popleft()` to dequeue — both O(1). For thread-safe queues (producer-consumer patterns), use queue.Queue from the standard library. For priority queues (always dequeue the smallest/largest), use heapq: `import heapq; heapq.heappush(heap, item); heapq.heappop(heap)`."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What does the 'self' parameter mean in Python class methods?",
+    "output": "'self' is a reference to the specific instance (object) that a method is being called on. When you call `obj.method()`, Python automatically passes `obj` as the first argument, which by convention is named 'self'. It is not a keyword — you could name it anything, but 'self' is the universal convention. Through 'self', a method can access the instance's attributes (`self.name`) and other methods (`self.other_method()`). Class methods receive 'cls' (the class itself) instead of 'self'. Static methods receive neither. Without 'self', methods would have no way to differentiate between data belonging to different instances of the same class."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I merge two dictionaries in Python?",
+    "output": "In Python 3.9+, use the merge operator: `merged = dict1 | dict2`. If keys overlap, dict2 values win. To update dict1 in place: `dict1 |= dict2`. In Python 3.5+, use unpacking: `merged = {**dict1, **dict2}`. For older Python, use `merged = dict1.copy(); merged.update(dict2)`. If you need to merge more than 2 dicts: `merged = dict1 | dict2 | dict3` (Python 3.9+) or use functools.reduce: `from functools import reduce; merged = reduce(lambda a,b: {**a,**b}, dicts)`. For deep merging (nested dicts), you need a recursive function since all built-in methods only merge the top level."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is memoization and how do I implement it in Python?",
+    "output": "Memoization is an optimization technique that caches the results of expensive function calls so repeated calls with the same arguments return instantly. Python provides this built-in via functools.lru_cache: `from functools import lru_cache\\n\\n@lru_cache(maxsize=None)\\ndef fibonacci(n):\\n    if n < 2: return n\\n    return fibonacci(n-1) + fibonacci(n-2)`. Without memoization, fibonacci(40) makes 2^40 calls. With it, only 41 unique computations are cached. lru_cache(maxsize=128) keeps the 128 most recently used results (LRU eviction policy). maxsize=None keeps all results forever. For class methods, use functools.cached_property for property-style memoization."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "Explain the difference between shallow copy and deep copy in Python.",
+    "output": "A shallow copy creates a new object but references the same nested objects as the original. A deep copy creates a new object AND recursively copies all nested objects. Example: `import copy; original = [[1, 2], [3, 4]]; shallow = copy.copy(original); deep = copy.deepcopy(original)`. If you modify `original[0][0] = 99`, shallow[0][0] also becomes 99 (they share the inner list), but deep[0][0] remains 1. For flat collections (no nesting), shallow copy is sufficient and faster. Use deepcopy when you have nested mutable objects (lists of lists, dicts of lists, etc.) and need full independence from the original."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "How do I sort a list of dictionaries by a specific key in Python?",
+    "output": "Use the sorted() function with a key argument: `sorted(people, key=lambda x: x['age'])`. This sorts a list of dicts by the 'age' key in ascending order. For descending: `sorted(people, key=lambda x: x['age'], reverse=True)`. For multiple keys (sort by age, then name): `sorted(people, key=lambda x: (x['age'], x['name']))`. Using operator.itemgetter is faster than lambda for simple key access: `from operator import itemgetter; sorted(people, key=itemgetter('age'))`. To sort in-place, use list.sort() instead of sorted() — it modifies the original list and returns None."
+  },
+  {
+    "system": "You are an expert Python programming assistant. Provide clear, accurate, and educational answers.",
+    "instruction": "What is the purpose of __init__ and __repr__ in Python classes?",
+    "output": "__init__ is the initializer (commonly called constructor) — it runs automatically when you create a new instance and sets up the object's initial state by assigning values to instance attributes via self. Example: `def __init__(self, name, age): self.name = name; self.age = age`. __repr__ defines the 'official' string representation used by repr() and shown in the REPL. It should return a string that ideally could recreate the object: `def __repr__(self): return f'Person(name={self.name!r}, age={self.age})'`. __str__ defines the 'friendly' representation used by print() and str(). If __str__ is not defined, Python falls back to __repr__. Always implement __repr__ — it makes debugging much easier."
+  }
+]
